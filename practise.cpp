@@ -1,106 +1,130 @@
 
 #include "iostream"
 #include "vector"
+#include "algorithm"
+#include "execution"
+#include "utility"
+#include "random"
+#include "limits"
+#include "stdexcept"
+
+class UDT
+{
+    public:
+    UDT()
+    {
+        std::cout << "Constructor" << std::endl;
+    }
+    ~UDT()
+    {
+        std::cout << "Destructor" << std::endl;
+    }
+    void print()
+    {
+        std::cout << "Print" << std::endl;
+    }
+};
+
+int main()
+{
+    std::shared_ptr<UDT> _udt = std::make_shared<UDT>(); 
+    {
+        std::shared_ptr<UDT> __udt = _udt;
+        std::cout << __udt.use_count() << std::endl;
+    } 
+    std::cout << _udt.use_count() << std::endl;
+}
 
 /*
+int main()
+{
+    int i = 9;
+
+    const float i_f = static_cast<const float>(i);
+
+    const char* const ch = "hello";
+
+    char* m_ch = const_cast<char*>(ch);
+
+    int *j = new int(10);
+
+    int* p = &(*(j + 2));
+
+    std::cout << p << std::endl;
+
+    int &z = i;
+
+    std::cout << z << std::endl;
+
+    z = 10;
+
+    std::cout << z << std::endl;
+
+
+}
+
+
+class Animal;
 class Dog
 {
-    int age;
+    Animal* _animal;
 
-public:
-    Dog(int age) : age(age) {}
-
-    const int* getAge() { return &this->age; }
-};
-
-class BigArray {
-    std::vector<int> data = std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    int counter;
-
-public:
-    BigArray(int counter = 0) : counter(counter) {}
-
-    BigArray(BigArray& otherBigArray) = delete;
-
-    BigArray& operator=(const BigArray& other) {
-        if (this != &other) {
-            data = other.data;
-            counter = other.counter;
+    Dog &operator=(const Dog &other)
+    {
+        if (this == &other)
+        {
+            return *this;
         }
+        delete _animal;
+
+        _animal = new Animal(*other._animal);
+
         return *this;
     }
+};
 
-    ~BigArray() {}
-    int getItem(int index) const {
-        // counter++; // since now i made the function const , it cant change the counter value
+int main()
+{
+    Dog d;
+    return 0;
+}
 
-        // a fix ::
-        const_cast<BigArray*>(this)->counter++;
-        return data[index];
+
+class Dog
+{
+public:
+    Dog()
+    {
+        std::cout << "From Dog Constructor" << std::endl;
     }
-
-    int getCounter() {
-        return counter;
+    virtual void bark()
+    {
+        std::cout << "Barking of dog class" << std::endl;
+    }
+    void pleaseBark()
+    {
+        this->bark();
     }
 };
 
+class Golden : public Dog
+{
+public:
+    Golden()
+    {
+        std::cout << "Golden Constructor" << std::endl;
+    }
 
-int main() {
+    void bark()
+    {
+        std::cout << "Barking of Golden class" << std::endl;
+    }
+};
 
-    // const int a  = 10;
-    //  a = 3; // error : assignment of read-only variable
-
-    // int const b = 20;
-    // b = 30; // error :expression must be a modifiable lvalue
-
-    // const int *c = 10; // a value of type "int" cannot be used to initialize an entity of type "const int *
-
-    // int* c = new int(10);
-    // *c = 10;
-    // std::cout << *c << std::endl;
-
-    // const int i = 9;
-
-    // int i = 9; value will be changed un const_cast
-    // const_cast<int&> (i) = 10;
-    // std::cout << i << "value is 9 " << std::endl;
-
-    /*
-    Dog* dog = new Dog(10);
-    const int* age = dog->getAge();
-
-    // *age = 12; error : on const int ...
-
-    const int* _age = dog->getAge();
-
-    std::cout << *_age << std::endl;
-    */
-
-/*
-    BigArray* bigArray = new BigArray();
-
-    bigArray->getItem(0);
-    bigArray->getItem(0);
-    bigArray->getItem(0);
-    bigArray->getItem(0);
-    bigArray->getItem(0);
-    bigArray->getItem(0);
-
-    std::cout << "Counter value " << bigArray->getCounter() << std::endl;
-
-    BigArray* _bigArray = new BigArray(100);
-
-    std::cout << "Counter value " << _bigArray->getCounter() << std::endl;
-
-    bigArray = _bigArray;
-
-    delete bigArray;
-
-    std::cout << "Counter value " << bigArray->getCounter() << std::endl; // 0
-
-    BigArray* __bigArray = new BigArray(_bigArray);
-
-
-    return EXIT_SUCCESS;
+int main()
+{
+    Golden g;
+    g.pleaseBark();
+    return 0;
 }
 */
