@@ -1,4 +1,5 @@
 
+
 #include "iostream"
 #include "vector"
 #include "algorithm"
@@ -9,6 +10,58 @@
 #include "stdexcept"
 #include "thread"
 #include "mutex"
+#include "variant"
+
+int main()
+{
+    std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    std::cout << std::count_if(v.begin(), v.end(), [](int x) { return x % 2 == 0; }) << std::endl;
+
+    auto ms = std::mismatch(v.begin(), v.end(), v.begin(), v.end());
+
+    std::cout << *ms.first << " " << *ms.second << std::endl;
+}
+
+/*
+int main()
+{
+    std::variant<int, std::string> v ;
+    v =  "this is a string";
+    v = 8;
+
+    std::cout << std::get<std::string>(v)  << std::endl;
+    std::cout << std::get<int>(v) << std::endl;
+
+
+}
+
+class PtrDeleter
+{
+public:
+    template <typename T>
+    void operator()(T *ptr)
+    {
+        std::cout << ptr << " :: " << *ptr << " :: deleted" << std::endl;
+        // delete ptr;
+    }
+};
+
+int main()
+{
+    std::unique_ptr<int, PtrDeleter> ptr(new int(10));
+    std::shared_ptr<int> ptr2(ptr.release());
+
+    std::cout << ptr << std::endl;
+
+    int* p = new int(10);
+
+    // prints the value of address : 0x13a6060e0
+    const char *address = reinterpret_cast<const char *>(*p);
+
+    std::cout << "address : " << address << std::endl;
+
+}
 
 template <typename T>
 T Sum(T arg)
@@ -27,7 +80,6 @@ int main()
     std::cout << Sum<double,double>(1.2f, 2, 3,4.3f);
 }
 
-/*
 void print(const int a...)
 {
     va_list args;
@@ -313,4 +365,5 @@ int main()
     g.pleaseBark();
     return 0;
 }
+
 */
