@@ -16,11 +16,36 @@ int main()
 {
     std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    std::cout << std::count_if(v.begin(), v.end(), [](int x) { return x % 2 == 0; }) << std::endl;
+    std::cout << std::count_if(v.begin(), v.end(), [](int x)
+                               { return x % 2 == 0; })
+              << std::endl;
 
     auto ms = std::mismatch(v.begin(), v.end(), v.begin(), v.end());
 
     std::cout << *ms.first << " " << *ms.second << std::endl;
+
+    std::vector<int> vec = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    std::vector<int>::iterator it = std::swap_ranges(vec.begin(), vec.end(), vec.begin());
+
+    std::cout << *it << std::endl;
+
+    auto res = std::all_of(vec.begin(), vec.end(), [](int x)
+                           { return x % 2 == 0; });
+
+    std::fill_n(vec.begin(), vec.size(), 0);
+
+    for (auto &i : vec)
+    {
+        std::cout << i << std::endl;
+    };
+
+    std::fill(vec.begin(), vec.end(), 0);
+
+    for (auto &i : vec)
+    {
+        std::cout << i << std::endl;
+    };
 }
 
 /*
