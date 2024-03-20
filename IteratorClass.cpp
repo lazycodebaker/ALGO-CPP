@@ -37,7 +37,7 @@ public:
         if (m_pos == m_size)
         {
             m_pos = 0;
-        }
+        };
     };
 
     T &get(int pos)
