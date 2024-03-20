@@ -11,6 +11,51 @@
 #include "thread"
 #include "mutex"
 #include "variant"
+#include "execution"
+#include "cmath"
+
+int main()
+{
+}
+
+/*
+int main()
+{
+    auto lerp = [] (double a, double b, double t)
+    {
+        return a + t * (b - a);
+    };
+
+    std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    std::transform(v.begin(), v.end(), v.begin(), [&lerp](int elem) {
+        return lerp(0, elem, 0.5);
+    });
+
+    for (auto i : v)
+    {
+        std::cout << i << " ";
+    };
+}
+
+
+int main()
+{
+    std::vector<int,std::allocator<int>> v{1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    int lastValue = 1;
+
+    auto print = [&](int x) // or [&lastValue](int x) mutable
+    {
+        lastValue = x;
+        std::cout << x << " ";
+    };
+
+    std::for_each(v.begin(), v.end(), print);
+
+    std::cout << lastValue;
+}
+
 
 int main()
 {
@@ -48,7 +93,7 @@ int main()
     };
 }
 
-/*
+
 int main()
 {
     std::variant<int, std::string> v ;
